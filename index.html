@@ -135,12 +135,6 @@
   .who h3{font-size:26px;margin-bottom:8px}
   .who p{color:var(--muted);font-size:17px}
 
-  /* roadmap */
-  .road{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px}
-  .rm{border:2px dashed var(--line);border-radius:var(--r);padding:24px;background:transparent}
-  .rm .soon{display:inline-block;font-size:12px;font-weight:700;background:var(--ink);color:var(--paper);border-radius:999px;padding:3px 10px;margin-bottom:14px}
-  .rm h3{font-size:21px;margin-bottom:6px}
-  .rm p{font-size:15px;color:var(--muted)}
 
   /* faq */
   #faq{background:var(--paper);border-top:2px solid var(--line)}
@@ -168,7 +162,7 @@
   @media (max-width:960px){
     .hero .wrap,.split{grid-template-columns:1fr}
     .stage{height:620px;max-width:520px}
-    .steps,.road{grid-template-columns:1fr 1fr}
+    .steps{grid-template-columns:1fr 1fr}
     .pains,.who-grid{grid-template-columns:1fr}
     nav .links a.t{display:none}
   }
@@ -179,7 +173,7 @@
     form.wl{flex-direction:column}
     form.wl input{padding:12px 14px}
     form.wl .btn{justify-content:center}
-    .steps,.road{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr}
     .stage{height:680px}
     .chat{right:0}
     .leads{width:270px}
@@ -298,20 +292,6 @@
       <div class="who reveal"><div class="big">🏋️</div><h3>Coaches and trainers</h3><p>Find people already talking about the goal you help with, and start the conversation.</p></div>
       <div class="who reveal"><div class="big">🧩</div><h3>Agencies</h3><p>Find business owners who need what you do, and reach them before your competitors do.</p></div>
       <div class="who reveal"><div class="big">🛍️</div><h3>Small businesses</h3><p>If your clients are on Instagram, LeadOS helps you find them and say hello.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="next" style="padding-top:0">
-  <div class="wrap">
-    <p class="kicker reveal">On the way</p>
-    <h2 class="reveal">What we're building next.</h2>
-    <p class="sub reveal">Waitlist members get these first, and get a say in what comes after.</p>
-    <div class="road">
-      <div class="rm reveal"><span class="soon">Coming soon</span><h3>Follow-ups</h3><p>Friendly follow-ups that stop the moment someone replies.</p></div>
-      <div class="rm reveal"><span class="soon">Coming soon</span><h3>AI replies</h3><p>An assistant that answers new replies and books calls into your calendar.</p></div>
-      <div class="rm reveal"><span class="soon">Coming soon</span><h3>CRM sync</h3><p>Send leads straight to the CRM you already use.</p></div>
-      <div class="rm reveal"><span class="soon">Coming soon</span><h3>Results view</h3><p>See which sources and messages bring replies.</p></div>
     </div>
   </div>
 </section>
