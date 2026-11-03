@@ -3,219 +3,148 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LeadOS: find your next clients on Instagram</title>
-<meta name="description" content="LeadOS finds people in your city who are trying to get in shape and sends them a first message from your Instagram. For personal trainers. 15 founding spots.">
+<title>LeadOS: for personal trainers</title>
+<meta name="description" content="LeadOS finds people near you who are trying to get in shape and sends them a first message from your Instagram, a few a day. 15 founding spots for personal trainers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --sky:#0A96FF; --sky-deep:#0070E0; --cloud:#F2F4F6; --ink:#101820; --muted:#59636E;
-    --red:#FF3B1F; --line:#D9DEE3;
-  }
+  :root{--paper:#FFFFFF;--ink:#16181B;--muted:#62676E;--line:#E3E5E8;--red:#F0391C;--blue:#0A7CFF}
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{font-family:Inter,system-ui,sans-serif;background:var(--cloud);color:var(--ink);font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased}
-  h1,h2,.big{font-family:Anton,Impact,sans-serif;font-weight:400;text-transform:uppercase;line-height:.95}
-  a{color:inherit}
-  img{display:block;width:100%;height:100%;object-fit:cover}
-  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
-  .btn{display:inline-block;font:600 16px Inter;text-decoration:none;border:0;cursor:pointer;border-radius:8px;padding:15px 28px;background:var(--red);color:#fff;transition:background .15s}
-  .btn:hover{background:#E62E12}
+  body{background:var(--paper);color:var(--ink);font-family:Newsreader,Georgia,serif;font-size:21px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--blue)}
+  .col{max-width:680px;margin:0 auto;padding:0 22px}
+  .wide{max-width:960px;margin:0 auto;padding:0 22px}
 
-  nav{position:absolute;top:0;left:0;right:0;z-index:5;color:#fff}
-  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:76px}
-  .logo{font:400 26px Anton;text-transform:uppercase;text-decoration:none;letter-spacing:.02em}
-  nav .links{display:flex;gap:28px;align-items:center;font-size:14px;font-weight:500}
-  nav .links a{text-decoration:none}
-  nav .links a:hover{text-decoration:underline;text-underline-offset:4px}
-  nav .links .cta{background:#fff;color:var(--ink);padding:9px 16px;border-radius:8px;font-weight:600}
-  nav .links .cta:hover{text-decoration:none}
+  header.bar{border-bottom:1px solid var(--line)}
+  header.bar .wide{display:flex;justify-content:space-between;align-items:center;height:62px;font-family:Inter,sans-serif;font-size:15px}
+  .logo{font-weight:600;letter-spacing:-.01em;color:var(--ink);text-decoration:none;font-size:17px}
+  .logo span{color:var(--red)}
+  header.bar a.j{color:var(--ink);font-weight:500}
 
-  .hero{background:linear-gradient(180deg,var(--sky-deep) 0%,var(--sky) 45%,#8ACBFF 75%,var(--cloud) 100%);padding:140px 0 0;text-align:center;color:#fff}
-  .hero h1{font-size:clamp(56px,9.5vw,136px);max-width:1050px;margin:0 auto}
-  .hero p{font-size:20px;max-width:560px;margin:26px auto 0;color:rgba(255,255,255,.93)}
-  .hero .btn{margin-top:32px}
-  .hero small{display:block;margin-top:14px;font-size:14px;color:rgba(255,255,255,.85)}
-  .photos{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:20px;align-items:end;margin-top:64px}
-  .photos div{overflow:hidden;background:#cfe3f5}
-  .p1{border-radius:22px;aspect-ratio:3/4}
-  .p2{border-radius:999px;aspect-ratio:3/4.6}
-  .p3{border-radius:22px;aspect-ratio:3/4}
-  .p4{border-radius:50%;aspect-ratio:1}
+  .top{padding:80px 0 30px}
+  .kick{font-family:Inter,sans-serif;font-size:14px;color:var(--muted);margin-bottom:22px}
+  h1{font-weight:500;font-size:clamp(40px,6vw,62px);line-height:1.08;letter-spacing:-.02em}
+  h2{font-weight:600;font-size:30px;line-height:1.2;letter-spacing:-.01em;margin:64px 0 18px}
+  p{margin-bottom:22px}
+  .lede{font-size:24px;color:#2b2f34}
+  mark{background:none;color:inherit;box-shadow:inset 0 -.38em 0 #FFD7CF}
 
-  section{padding:120px 0}
+  figure{margin:46px auto}
+  figure img{display:block;width:100%;height:auto;border-radius:4px}
+  figcaption{font-family:Inter,sans-serif;font-size:13px;color:var(--muted);margin-top:10px}
 
-  .story{display:grid;grid-template-columns:1.2fr .8fr;gap:70px;align-items:center}
-  .story p{font-size:clamp(24px,2.6vw,34px);line-height:1.35;font-weight:500;letter-spacing:-.01em}
-  .story p + p{margin-top:24px}
-  .story p span{color:var(--muted)}
-  .story .ph{border-radius:22px;overflow:hidden;aspect-ratio:3/4}
+  .btn{display:inline-block;font:600 16px Inter,sans-serif;background:var(--red);color:#fff;text-decoration:none;border:0;border-radius:6px;padding:14px 24px;cursor:pointer}
+  .btn:hover{background:#D72E12}
 
-  #what{background:#fff}
-  #what h2{font-size:clamp(44px,6vw,84px);margin-bottom:50px}
-  .rows{border-top:1px solid var(--line)}
-  .row{display:grid;grid-template-columns:1fr 1.3fr;gap:40px;padding:34px 0;border-bottom:1px solid var(--line)}
-  .row h3{font:400 clamp(28px,3vw,40px) Anton;text-transform:uppercase;line-height:1}
-  .row p{color:var(--muted);font-size:18px;max-width:560px}
-
-  #safe{background:var(--sky);color:#fff}
-  #safe .wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;align-items:center}
-  #safe .ph{border-radius:999px;overflow:hidden;aspect-ratio:3/4.4}
-  #safe h2{font-size:clamp(44px,5.4vw,76px)}
-  #safe p{font-size:20px;margin-top:22px;max-width:560px;color:rgba(255,255,255,.95)}
-
-  #pricing h2{font-size:clamp(44px,6vw,84px)}
-  .founding{margin-top:18px;font-size:20px;max-width:720px}
-  .founding b{color:var(--red)}
-  table{width:100%;border-collapse:collapse;margin-top:48px;background:#fff;border-radius:18px;overflow:hidden;font-size:16px}
-  th,td{padding:16px 22px;text-align:left;border-bottom:1px solid var(--line)}
-  th{font-weight:400;vertical-align:bottom}
-  th .pn{display:block;font:600 14px Inter;color:var(--muted)}
-  th .pp{display:block;font:400 48px Anton;line-height:1.05;margin-top:4px}
-  th .pp small{font:500 15px Inter;color:var(--muted)}
-  th .pf{display:block;font-size:13px;font-weight:600;color:var(--red);margin-top:4px;min-height:18px}
+  table{width:100%;border-collapse:collapse;font-family:Inter,sans-serif;font-size:15px;margin:10px 0 26px}
+  th,td{text-align:left;padding:11px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-weight:600}
+  th small{display:block;font-weight:400;color:var(--muted)}
   td:first-child{color:var(--muted)}
-  td:not(:first-child),th:not(:first-child){width:22%}
-  tr:last-child td{border-bottom:0}
   .tbl{overflow-x:auto}
+  .small{font-family:Inter,sans-serif;font-size:14px;color:var(--muted)}
 
-  #join{padding:0;background:var(--ink);color:#fff}
-  #join .wrap{display:grid;grid-template-columns:1fr 1fr;gap:0;max-width:none;padding:0}
-  #join .ph{min-height:560px}
-  #join .in{padding:90px 7vw;display:flex;flex-direction:column;justify-content:center}
-  #join h2{font-size:clamp(44px,5vw,72px)}
-  #join p.lead{margin-top:18px;color:#C9D1DA;max-width:480px}
-  form{margin-top:34px;display:grid;gap:12px;max-width:460px}
-  form label{font-size:14px;font-weight:500;color:#C9D1DA;display:grid;gap:6px}
-  form input{font:500 17px Inter;padding:14px 16px;border-radius:8px;border:1px solid #33404D;background:#18232E;color:#fff;outline:none}
-  form input:focus{border-color:var(--sky)}
-  form .btn{margin-top:8px;justify-self:start}
-  .err{color:#FF8A75;font-size:14px;min-height:20px}
-  .ok{display:none;margin-top:34px;max-width:460px;font-size:20px}
-  .ok b{font:400 40px Anton;text-transform:uppercase;display:block;margin-bottom:8px}
+  .join{background:#F4F6F8;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:70px 0;margin-top:70px}
+  .join h2{margin-top:0}
+  form{display:grid;gap:14px;margin-top:26px;font-family:Inter,sans-serif}
+  form label{font-size:14px;font-weight:500;display:grid;gap:6px}
+  form input{font:400 17px Inter,sans-serif;padding:13px 14px;border:1px solid #C9CDD2;border-radius:6px;background:#fff;color:var(--ink);outline:none}
+  form input:focus{border-color:var(--blue)}
+  form .btn{justify-self:start;margin-top:6px}
+  .err{color:var(--red);font-size:14px;min-height:20px}
+  .ok{display:none;margin-top:26px}
   .done form{display:none}.done .ok{display:block}
 
-  #faq h2{font-size:clamp(44px,6vw,84px);margin-bottom:46px}
-  .qa{display:grid;grid-template-columns:1fr 1fr;gap:40px 70px}
-  .qa h3{font-size:19px;font-weight:700;margin-bottom:8px}
-  .qa p{color:var(--muted);font-size:17px}
+  .qa h3{font-size:21px;font-weight:600;margin:34px 0 6px}
+  .sign{margin:60px 0 90px}
+  footer{border-top:1px solid var(--line);padding:26px 0 40px;font-family:Inter,sans-serif;font-size:13px;color:var(--muted)}
 
-  footer{padding:30px 0;font-size:14px;color:var(--muted);border-top:1px solid var(--line)}
-  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
-  footer .logo{color:var(--ink);font-size:20px}
-
-  @media (max-width:900px){
-    .photos{grid-template-columns:1fr 1fr}
-    .story,#safe .wrap,#join .wrap{grid-template-columns:1fr}
-    .story .ph{max-width:420px}
-    #safe .ph{max-width:340px}
-    #join .ph{min-height:320px}
-    .row{grid-template-columns:1fr;gap:10px}
-    .qa{grid-template-columns:1fr}
-    nav .links a:not(.cta){display:none}
-  }
   @media (max-width:560px){
-    body{font-size:17px}
-    section{padding:84px 0}
-    .hero{padding-top:118px}
-    .photos{gap:12px;margin-top:48px}
-    #join .in{padding:70px 24px}
-    th,td{padding:12px 14px}
-    th .pp{font-size:36px}
+    body{font-size:19px}
+    .top{padding-top:54px}
+    .lede{font-size:21px}
+    h2{font-size:26px;margin-top:52px}
   }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="wrap">
-    <a class="logo" href="#top">LeadOS</a>
-    <div class="links">
-      <a href="#what">What it does</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#faq">Questions</a>
-      <a class="cta" href="#join">Join the waitlist</a>
-    </div>
-  </div>
-</nav>
-
-<header class="hero" id="top">
-  <div class="wrap">
-    <h1>Find your next clients on Instagram</h1>
-    <p>LeadOS finds people in your city who are trying to get in shape, and sends them a first message from your account.</p>
-    <a class="btn" href="#join">Join the waitlist</a>
-    <small>For personal trainers. The first 15 get a founding spot.</small>
-    <div class="photos">
-      <div class="p1"><img src="img/trainer-gym.jpg" alt="A trainer coaching a client through a kettlebell swing"></div>
-      <div class="p2"><img src="img/runner-street.jpg" alt="A man stretching on the street after a run, checking his phone"></div>
-      <div class="p3"><img src="img/trainer-phone.jpg" alt="A trainer on a gym bench answering a message"></div>
-      <div class="p4"><img src="img/park-group.jpg" alt="A group workout in a park"></div>
-    </div>
+<header class="bar">
+  <div class="wide">
+    <a class="logo" href="#">LeadOS<span>.</span></a>
+    <a class="j" href="#join">Join the waitlist</a>
   </div>
 </header>
 
-<section>
-  <div class="wrap story">
-    <div>
-      <p>Most trainers get clients the same way. Post, wait, and hope someone sends a message.</p>
-      <p><span>Meanwhile, people a few streets away are posting about their first week back at the gym.</span> LeadOS finds them and says hi for you.</p>
-    </div>
-    <div class="ph"><img src="img/gym-selfie.jpg" alt="A woman taking a mirror photo at the gym"></div>
+<main>
+  <div class="col top">
+    <p class="kick">For personal trainers</p>
+    <h1>Someone near your gym posted "day one" this morning. They haven't heard from you yet.</h1>
   </div>
-</section>
 
-<section id="what">
-  <div class="wrap">
+  <div class="col">
+    <p class="lede">You know how getting clients usually goes. You post, you wait, and you hope someone sends you a message. Most weeks, not many do.</p>
+    <p>The people who need a trainer aren't hiding. They post their first week back at the gym. They tag the park they run in. They follow the gyms on your street. Someone just has to look for them, and then say hi.</p>
+    <p>That's the part LeadOS does.</p>
+  </div>
+
+  <figure class="wide">
+    <img src="img/whiteboard.jpg" alt="A handwritten weekly client schedule on a gym whiteboard, with open slots">
+    <figcaption>Every open slot is a client you haven't met yet.</figcaption>
+  </figure>
+
+  <div class="col">
+    <h2>We tried it by hand first</h2>
+    <p>Before we built anything, we spent three days sending cold DMs ourselves. Two things stood out.</p>
+    <p>Finding the right people took far longer than writing to them. And one of our accounts sent too many messages too fast, so <mark>Instagram blocked its DMs for about four days.</mark></p>
+    <p>So we built a tool that does the slow part, and does it carefully.</p>
+  </div>
+
+  <figure class="wide">
+    <img src="img/desk-night.jpg" alt="A desk at night with a laptop and a notebook of crossed-out names">
+  </figure>
+
+  <div class="col">
     <h2>What it does</h2>
-    <div class="rows">
-      <div class="row"><h3>Finds people near you</h3><p>It looks where local people already show up: who posts from the gyms and parks in your area, who follows the gyms near you, who uses your city's hashtags, who comments and likes.</p></div>
-      <div class="row"><h3>Checks who's a fit</h3><p>AI reads each profile against what you offer, so you only message people who might actually want a trainer.</p></div>
-      <div class="row"><h3>Sends the first message</h3><p>A personal DM you've approved goes out from your own Instagram. If they don't answer, it follows up. When they reply, it stops and hands the chat to you.</p></div>
-      <div class="row"><h3>Keeps track</h3><p>Every person you've messaged sits in a simple CRM, so you can see who's new, who replied and who's ready to book.</p></div>
-    </div>
-  </div>
-</section>
+    <p>It looks where local people already show up: who posts from the gyms and parks in your area, who follows the gyms near you, who uses your city's hashtags.</p>
+    <figure style="max-width:420px;margin:36px 0"><img src="img/shoes.jpg" alt="Someone tying their running shoes on a sidewalk"></figure>
+    <p>AI reads each profile against what you offer and drops the people who don't fit.</p>
+    <p>You approve a personal first message. LeadOS sends it from your own Instagram. If there's no answer, it follows up. When someone replies, it stops, and the conversation is yours.</p>
+    <p>Everyone you've messaged lands in a simple CRM, so nobody gets forgotten.</p>
 
-<section id="safe">
-  <div class="wrap">
-    <div class="ph"><img src="img/gym-night.jpg" alt="" aria-hidden="true"></div>
-    <div>
-      <h2>Careful with your account</h2>
-      <p>Send too many DMs too fast and Instagram can block your messages for days. So LeadOS sends a few a day, minutes apart, from your own Chrome, never from a server. If your account is new, it warms up before anything goes out.</p>
-    </div>
+    <h2>About your account</h2>
+    <p>LeadOS sends from your own Chrome, not from a server. It keeps to a daily limit and waits minutes between messages. If your account is new, it warms up first.</p>
+    <p>Any tool that sends DMs carries some risk. We'd rather send you fewer messages than get you blocked.</p>
   </div>
-</section>
 
-<section id="pricing">
-  <div class="wrap">
-    <h2>Pricing</h2>
-    <p class="founding">The first 15 trainers on the waitlist get a founding spot: <b>7 days of Starter free, then $49 a month instead of $69</b>, for as long as they stay.</p>
+  <figure class="col">
+    <img src="img/bench-phone.jpg" alt="A phone on a gym bench next to a water bottle">
+  </figure>
+
+  <div class="col">
+    <h2>What it costs</h2>
+    <p>The first 15 trainers who join the waitlist get a founding spot: <mark>7 days free, then $49 a month instead of $69</mark>, for as long as they stay.</p>
     <div class="tbl">
       <table>
-        <tr><th></th>
-          <th><span class="pn">Starter</span><span class="pp">$69<small> /mo</small></span><span class="pf">$49 for founding spots</span></th>
-          <th><span class="pn">Growth</span><span class="pp">$99<small> /mo</small></span><span class="pf"></span></th>
-          <th><span class="pn">Agency</span><span class="pp">$199<small> /mo</small></span><span class="pf"></span></th></tr>
+        <tr><th></th><th>Starter<small>$69 a month</small></th><th>Growth<small>$99 a month</small></th><th>Agency<small>$199 a month</small></th></tr>
         <tr><td>Instagram accounts</td><td>1</td><td>3</td><td>7</td></tr>
         <tr><td>Team members</td><td>1</td><td>3</td><td>10</td></tr>
         <tr><td>AI-written openers a month</td><td>500</td><td>1,500</td><td>3,500</td></tr>
         <tr><td>Search credits a month</td><td>500</td><td>1,500</td><td>4,000</td></tr>
-        <tr><td>Lead lists, CRM and pipelines</td><td>✓</td><td>✓</td><td>✓</td></tr>
-        <tr><td>Reviewed automatic outreach</td><td>✓</td><td>✓</td><td>✓</td></tr>
-        <tr><td>Reply detection and handoff to you</td><td>✓</td><td>✓</td><td>✓</td></tr>
-        <tr><td>Support</td><td>Standard</td><td>Priority</td><td>Priority and onboarding</td></tr>
+        <tr><td>Lead lists, CRM, pipelines</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>Reviewed automatic outreach</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>Reply detection, handoff to you</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>Support</td><td>Standard</td><td>Priority</td><td>Priority, onboarding</td></tr>
       </table>
     </div>
+    <p class="small">The founding price is for Starter. Most trainers with one account only need Starter.</p>
   </div>
-</section>
 
-<section id="join">
-  <div class="wrap">
-    <div class="ph"><img src="img/track-laugh.jpg" alt="" aria-hidden="true"></div>
-    <div class="in wl-box">
+  <section class="join" id="join">
+    <div class="col wl-box">
       <h2>Join the waitlist</h2>
-      <p class="lead">We'll email you when it's your turn. If you're one of the first 15, you get a founding spot.</p>
+      <p>We'll email you when it's your turn. If you're one of the first 15, the founding spot is yours.</p>
       <form novalidate>
         <label>Email<input type="email" name="email" required autocomplete="email"></label>
         <label>Instagram handle<input type="text" name="instagram" placeholder="@" required></label>
@@ -223,30 +152,23 @@
         <p class="err" role="alert"></p>
         <button class="btn" type="submit">Join the waitlist</button>
       </form>
-      <div class="ok"><b>You're on the list</b>We'll email you when your spot opens.</div>
+      <div class="ok"><p><strong>You're on the list.</strong> We'll email you when your spot opens.</p></div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="faq">
-  <div class="wrap">
-    <h2>Questions</h2>
-    <div class="qa">
-      <div><h3>Will this get my account blocked?</h3><p>Any tool that sends DMs carries some risk. LeadOS keeps it low: a daily limit, minutes between messages, a warm-up for new accounts, and sending from your own browser.</p></div>
-      <div><h3>Is it spam?</h3><p>You pick who gets a message, AI skips people who don't fit, and every first DM is written for that person. It's a handful of messages a day.</p></div>
-      <div><h3>Does my computer need to be on?</h3><p>Yes, while a campaign runs. Messages go out from your own Chrome.</p></div>
-      <div><h3>What's a founding spot?</h3><p>The first 15 trainers on the waitlist get 7 days of Starter free, then $49 a month instead of $69, for as long as they stay subscribed.</p></div>
-      <div><h3>What if the 15 spots are gone?</h3><p>The waitlist stays open, and you'll get access at the normal price.</p></div>
-      <div><h3>Is it only for personal trainers?</h3><p>It's built for them first. If you sell something else on Instagram, join anyway and tell us.</p></div>
-    </div>
+  <div class="col qa">
+    <h3>Does my computer need to be on?</h3>
+    <p>Yes, while a campaign runs. Messages go out from your own Chrome.</p>
+    <h3>What if the 15 spots are gone?</h3>
+    <p>The waitlist stays open, and you'll get in at the normal price.</p>
+    <h3>I'm not a personal trainer. Can I join?</h3>
+    <p>Yes. We built it for trainers first, but if you sell on Instagram, tell us what you do when you sign up.</p>
+    <p class="sign">The LeadOS team</p>
   </div>
-</section>
+</main>
 
 <footer>
-  <div class="wrap">
-    <span class="logo">LeadOS</span>
-    <span>© 2026 LeadOS. Not affiliated with Instagram or Meta.</span>
-  </div>
+  <div class="col">© 2026 LeadOS. Not affiliated with Instagram or Meta.</div>
 </footer>
 
 <script>
