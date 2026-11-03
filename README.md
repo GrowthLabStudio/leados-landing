@@ -4,4 +4,4 @@ The waitlist page for LeadOS. One self-contained file: `index.html` (HTML, CSS a
 
 The design (cream background, black outlines, bright colour blocks, playful and game-like) is meant as the base for the LeadOS app UI too.
 
-Draft v5. Signups are not connected yet: `WAITLIST_ENDPOINT` in the script is empty, so for now they stay in the visitor's browser.
+Draft v6. Signups are not connected yet: `WAITLIST_ENDPOINT` in the script is empty, so for now they stay in the visitor's browser.

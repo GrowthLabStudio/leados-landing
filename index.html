@@ -7,240 +7,361 @@
 <meta name="description" content="LeadOS finds people in your city who want to get in shape, checks they fit, and sends a personal first DM from your own Instagram. 15 founding spots for personal trainers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#F4F2EE; --paper:#FFFFFF; --ink:#1A1A18; --muted:#66645E; --soft:#8E8B84;
     --line:#E2DFD8; --line2:#ECE9E3;
-    --blue:#0B63E5; --blue-d:#0850BC; --sky:#CFE4FF; --sky2:#E8F2FF;
-    --orange:#FF5A1F; --amber:#F6B14A; --dark:#1E1E1C; --dark2:#2A2A27;
+    --blue:#0B63E5; --blue-d:#0850BC; --sky2:#E8F2FF;
+    --yellow:#FFD84A; --yellow-l:#FFF1B8; --yellow-d:#E9B800;
+    --orange:#FF5A1F; --dark:#1C1C1A;
+    --ease:cubic-bezier(.2,.8,.2,1);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
-  h1,h2,h3,.tight{font-family:"Inter Tight",Inter,sans-serif;font-weight:600;letter-spacing:-.045em;line-height:1.02}
+  body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3{font-family:"Inter Tight",Inter,sans-serif;font-weight:600;letter-spacing:-.045em;line-height:1.02}
   a{color:inherit}
+  ::selection{background:var(--yellow)}
   .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
-  .btn{display:inline-flex;align-items:center;gap:8px;font:600 16px Inter;text-decoration:none;border-radius:8px;padding:12px 20px;border:1px solid transparent;cursor:pointer;transition:background .15s,transform .15s}
-  .btn.pri{background:var(--blue);color:#fff;border-color:var(--blue-d);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 1px 2px rgba(0,0,0,.12)}
-  .btn.pri:hover{background:var(--blue-d)}
-  .btn.sec{background:var(--paper);color:var(--ink);border-color:var(--line);box-shadow:0 1px 2px rgba(0,0,0,.06)}
-  .btn.sec:hover{background:#FAF9F7}
+  .hand{font-family:Caveat,cursive;font-weight:700;letter-spacing:0}
+
+  /* buttons */
+  .btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 16px Inter;text-decoration:none;border-radius:9px;padding:12px 20px;border:1px solid transparent;cursor:pointer;transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .2s}
+  .btn .ar{display:inline-block;transition:transform .25s var(--ease)}
+  .btn:hover .ar{transform:translateX(4px)}
+  .btn.pri{background:var(--blue);color:#fff;border-color:var(--blue-d);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 2px 0 var(--blue-d)}
+  .btn.pri:hover{transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 4px 0 var(--yellow-d),0 10px 24px -8px rgba(11,99,229,.5)}
+  .btn.pri:active{transform:translateY(1px);box-shadow:0 0 0 var(--blue-d)}
+  .btn.sec{background:var(--paper);color:var(--ink);border-color:var(--line);box-shadow:0 2px 0 var(--line)}
+  .btn.sec:hover{transform:translateY(-2px);box-shadow:0 4px 0 var(--yellow)}
+  .btn.yel{background:var(--yellow);color:var(--ink);border-color:var(--yellow-d);box-shadow:0 2px 0 var(--yellow-d)}
+  .btn.yel:hover{transform:translateY(-2px);box-shadow:0 4px 0 var(--ink)}
+
+  /* highlighter + scribbles */
+  .hl{background:linear-gradient(transparent 58%,var(--yellow) 58%,var(--yellow) 92%,transparent 92%) no-repeat 0 0/0% 100%;transition:background-size 1s var(--ease) .2s;padding:0 .08em}
+  .in .hl,.hl.in{background-size:100% 100%}
+  .ul{position:relative;white-space:nowrap;display:inline-block}
+  .ul svg{position:absolute;left:-2%;bottom:-.16em;width:104%;height:.36em;overflow:visible}
+  .ul path{fill:none;stroke:var(--yellow);stroke-width:7;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420;transition:stroke-dashoffset 1.1s var(--ease) .9s}
+  .go .ul path,.in .ul path{stroke-dashoffset:0}
 
   /* announcement + nav */
   .ann{background:var(--dark);color:#D8D6D0;font-size:14px;text-align:center;padding:10px 16px}
-  .ann b{color:#9FC8FF;font-weight:600;margin-right:8px;font-size:12px;letter-spacing:.06em}
-  .ann a{color:#fff;font-weight:600;text-decoration:none;margin-left:8px}
-  nav{border-bottom:1px solid var(--line);background:var(--bg)}
+  .ann b{display:inline-block;background:var(--yellow);color:var(--ink);font-weight:700;font-size:11px;letter-spacing:.06em;border-radius:4px;padding:1px 6px;margin-right:8px;transform:translateY(-1px)}
+  .ann a{color:#fff;font-weight:600;text-decoration:none;margin-left:8px;border-bottom:1px solid var(--yellow)}
+  .ann a:hover{color:var(--yellow)}
+  nav{position:sticky;top:0;z-index:30;background:rgba(244,242,238,.82);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid transparent;transition:border-color .3s,background .3s}
+  nav.sc{border-color:var(--line)}
   nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
   .logo{display:flex;align-items:center;gap:9px;font:700 19px "Inter Tight";letter-spacing:-.03em;text-decoration:none}
-  .logo svg{width:26px;height:26px}
-  nav .mid{display:flex;gap:30px;font-size:15px;color:#3D3C38}
-  nav .mid a{text-decoration:none}
-  nav .mid a:hover{color:var(--ink)}
+  .logo svg{width:26px;height:26px;transition:transform .5s var(--ease)}
+  .logo:hover svg{transform:rotate(-10deg) scale(1.08)}
+  nav .mid{display:flex;gap:6px;font-size:15px;color:#3D3C38}
+  nav .mid a{text-decoration:none;padding:7px 12px;border-radius:8px;transition:background .2s,color .2s}
+  nav .mid a:hover{background:var(--yellow-l);color:var(--ink)}
   nav .btn{padding:8px 14px;font-size:14px}
 
   /* hero */
-  .hero{text-align:center;padding:88px 0 0;position:relative}
-  .hero h1{font-size:clamp(46px,7vw,84px);max-width:900px;margin:0 auto}
-  .hero p{font-size:20px;color:#4A4944;max-width:640px;margin:22px auto 0;line-height:1.5}
+  .hero{text-align:center;padding:84px 0 0;position:relative}
+  .hero .tag{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;background:var(--paper);border:1px solid var(--line);border-radius:99px;padding:6px 14px 6px 8px;text-decoration:none;transition:transform .25s var(--ease),box-shadow .25s}
+  .hero .tag:hover{transform:translateY(-2px);box-shadow:0 3px 0 var(--yellow)}
+  .hero .tag span{white-space:nowrap;background:var(--yellow);border-radius:99px;padding:1px 8px;font-weight:700;font-size:12px}
+  .hero h1{font-size:clamp(44px,7.2vw,88px);max-width:940px;margin:22px auto 0}
+  .w{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(8px);transition:opacity .7s var(--ease),transform .7s var(--ease),filter .7s var(--ease)}
+  .go .w{opacity:1;transform:none;filter:none}
+  .hero p.sub{font-size:20px;color:#4A4944;max-width:640px;margin:24px auto 0;line-height:1.5}
+  .fade{opacity:0;transform:translateY(14px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+  .go .fade{opacity:1;transform:none}
   .hero .ctas{display:flex;gap:10px;justify-content:center;margin-top:30px;flex-wrap:wrap}
-  .stage{position:relative;margin-top:56px}
-  .map{position:absolute;left:0;right:0;bottom:0;height:62%;overflow:hidden;background:var(--blue)}
+  .stage{position:relative;margin-top:64px}
+  .map{position:absolute;left:0;right:0;bottom:0;height:60%;overflow:hidden;background:var(--blue)}
   .map svg{width:100%;height:100%;display:block}
-  .app-wrap{position:relative;max-width:1140px;margin:0 auto;padding:0 24px}
+  .pin{animation:ping 2.4s var(--ease) infinite;transform-box:fill-box;transform-origin:center}
+  .pin:nth-of-type(2){animation-delay:.5s}.pin:nth-of-type(3){animation-delay:1s}.pin:nth-of-type(4){animation-delay:1.5s}.pin:nth-of-type(5){animation-delay:2s}
+  @keyframes ping{0%{transform:scale(.6);opacity:0}20%{transform:scale(1.15);opacity:1}35%{transform:scale(1)}100%{opacity:1}}
+  .app-wrap{position:relative;max-width:1140px;margin:0 auto;padding:0 24px;perspective:1600px}
+  .tilt{transition:transform .6s var(--ease);transform-style:preserve-3d;opacity:0;transform:translateY(40px) rotateX(8deg)}
+  .go .tilt{opacity:1;transform:none;transition:transform .6s var(--ease),opacity 1s var(--ease) .5s}
+
+  /* notes around the app */
+  .note{position:absolute;z-index:3;font-family:Caveat,cursive;font-weight:700;font-size:25px;line-height:1.05;color:var(--ink);opacity:0;transition:opacity .6s var(--ease) 1.8s,transform .6s var(--ease) 1.8s}
+  .go .note{opacity:1}
+  .note span{background:var(--yellow);padding:2px 8px;border-radius:4px;display:inline-block;transform:rotate(-3deg);box-shadow:2px 3px 0 rgba(0,0,0,.12)}
+  .note svg{display:block;overflow:visible}
+  .note path{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:300;stroke-dashoffset:300;transition:stroke-dashoffset 1s var(--ease) 2.1s}
+  .go .note path{stroke-dashoffset:0}
+  .n1{left:-150px;top:150px;transform:translateX(-10px)}
+  .n2{right:-112px;top:22px;text-align:right;transform:translateX(10px)}
+  .n2 span{transform:rotate(3deg)}
+  .go .n1,.go .n2{transform:none}
 
   /* app mock */
-  .tabs{display:flex;gap:4px;background:#EDEAE4;border:1px solid var(--line);border-bottom:0;border-radius:12px 12px 0 0;padding:6px 6px 0;font-size:14px}
-  .tab{display:flex;align-items:center;gap:7px;padding:9px 14px;border-radius:8px 8px 0 0;color:var(--muted);cursor:pointer;border:1px solid transparent;border-bottom:0;background:none;font:500 14px Inter}
+  .tabs{display:flex;gap:4px;background:#EDEAE4;border:1px solid var(--line);border-bottom:0;border-radius:12px 12px 0 0;padding:6px 6px 0}
+  .tab{position:relative;display:flex;align-items:center;gap:7px;padding:9px 14px 11px;border-radius:8px 8px 0 0;color:var(--muted);cursor:pointer;border:1px solid transparent;border-bottom:0;background:none;font:500 14px Inter;transition:color .2s,background .2s}
+  .tab:hover{color:var(--ink);background:rgba(255,255,255,.55)}
   .tab.on{background:var(--paper);color:var(--ink);border-color:var(--line)}
   .tab svg{width:15px;height:15px}
-  .app{background:var(--paper);border:1px solid var(--line);border-radius:0 0 12px 12px;display:grid;grid-template-columns:210px 1fr;min-height:470px;text-align:left;font-size:13px;box-shadow:0 30px 60px -30px rgba(20,20,10,.35);overflow:hidden}
+  .tab .prog{position:absolute;left:10px;right:10px;bottom:3px;height:2px;border-radius:2px;background:transparent;overflow:hidden}
+  .tab.on .prog i{display:block;height:100%;width:0;background:var(--yellow-d)}
+  .tab.on.run .prog i{animation:prog 6s linear forwards}
+  @keyframes prog{to{width:100%}}
+  .app{background:var(--paper);border:1px solid var(--line);border-radius:0 0 12px 12px;display:grid;grid-template-columns:210px 1fr;min-height:476px;text-align:left;font-size:13px;box-shadow:0 40px 80px -40px rgba(20,20,10,.45);overflow:hidden}
   .side{border-right:1px solid var(--line2);padding:16px 12px;background:#FCFBFA}
   .side .acct{display:flex;align-items:center;gap:8px;padding:6px 8px 14px;border-bottom:1px solid var(--line2);margin-bottom:12px;font-weight:600}
-  .side .acct i{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#FF8A5B,#FF5A1F);display:inline-block}
+  .side .acct i{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#FFD84A,#FF5A1F);display:inline-block}
   .side .acct small{display:block;font-weight:400;color:var(--soft);font-size:11px}
   .side h6{font:600 10.5px Inter;letter-spacing:.08em;color:var(--soft);text-transform:uppercase;margin:14px 8px 6px}
-  .side a{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:6px;color:#45443F;text-decoration:none}
-  .side a.on{background:var(--sky2);color:var(--blue-d);font-weight:600}
+  .side a{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:6px;color:#45443F;text-decoration:none;transition:background .15s}
+  .side a:hover{background:#F3F1ED}
+  .side a.on{background:var(--yellow-l);color:var(--ink);font-weight:600}
   .side a span{font-size:11px;color:var(--soft)}
   .warm{margin:16px 8px 0;padding:10px;border:1px solid var(--line2);border-radius:8px;font-size:11.5px;color:var(--muted)}
   .warm .bar{height:5px;background:#EEE;border-radius:9px;margin-top:7px;overflow:hidden}
-  .warm .bar i{display:block;height:100%;width:100%;background:#2DB36A}
+  .warm .bar i{display:block;height:100%;width:0;background:#2DB36A;transition:width 1.6s var(--ease) 1.2s}
+  .go .warm .bar i{width:100%}
   .main{padding:20px 24px;min-width:0}
-  .screen{display:none}.screen.on{display:block}
+  .screen{display:none}.screen.on{display:block;animation:sIn .45s var(--ease)}
+  @keyframes sIn{from{opacity:0;transform:translateY(6px)}}
   .mh{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:14px}
   .mh h4{font:600 18px "Inter Tight";letter-spacing:-.02em}
   .mh p{color:var(--soft);font-size:12.5px;margin-top:2px}
-  .mbtn{font:600 12.5px Inter;padding:7px 12px;border-radius:7px;background:var(--blue);color:#fff;white-space:nowrap}
+  .mbtn{font:600 12.5px Inter;padding:7px 12px;border-radius:7px;background:var(--blue);color:#fff;white-space:nowrap;transition:transform .2s}
+  .mbtn:hover{transform:translateY(-1px)}
   .mbtn.g{background:#fff;color:var(--ink);border:1px solid var(--line)}
   .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-  .chip{font-size:12px;border:1px solid var(--line);border-radius:6px;padding:4px 9px;color:#45443F;background:#fff}
+  .chip{font-size:12px;border:1px solid var(--line);border-radius:6px;padding:4px 9px;color:#45443F;background:#fff;transition:border-color .2s,background .2s}
+  .chip:hover{border-color:var(--yellow-d);background:var(--yellow-l)}
   .chip b{font-weight:600}
   table.t{width:100%;border-collapse:collapse}
   .t th{font:500 11.5px Inter;color:var(--soft);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line2)}
   .t td{padding:9px 10px;border-bottom:1px solid var(--line2);vertical-align:middle;white-space:nowrap}
+  .t tr.r{transition:background .15s}
+  .t tr.r:hover{background:#FFFBEA}
+  .screen.on .t tr.r{animation:row .5s var(--ease) both}
+  .screen.on .t tr.r:nth-child(2){animation-delay:.08s}.screen.on .t tr.r:nth-child(3){animation-delay:.16s}.screen.on .t tr.r:nth-child(4){animation-delay:.24s}.screen.on .t tr.r:nth-child(5){animation-delay:.32s}.screen.on .t tr.r:nth-child(6){animation-delay:.4s}
+  @keyframes row{from{opacity:0;transform:translateX(-10px)}}
   .who{display:flex;align-items:center;gap:9px}
   .av{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font:600 11px Inter;color:#fff;flex:none}
   .who b{font-weight:600}
   .who small{display:block;color:var(--soft);font-size:11.5px;max-width:230px;overflow:hidden;text-overflow:ellipsis}
   .pill{display:inline-block;font:600 11px Inter;padding:2px 8px;border-radius:99px}
-  .fit{background:#E3F6EA;color:#17834A}.may{background:#FFF2DC;color:#A8650B}.no{background:#F1EFEB;color:#86837C}
+  .screen.on .pill{animation:pop .4s var(--ease) both .5s}
+  @keyframes pop{from{transform:scale(.6);opacity:0}}
+  .fit{background:#E3F6EA;color:#17834A}.may{background:var(--yellow-l);color:#8A6500}.no{background:#F1EFEB;color:#86837C}
   .src{color:var(--muted)}
   .camp{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
   .box{border:1px solid var(--line2);border-radius:10px;padding:14px}
   .box h5{font:600 12px Inter;color:var(--soft);margin-bottom:10px}
   .msg{background:var(--sky2);border-radius:14px 14px 4px 14px;padding:10px 12px;margin-left:auto;max-width:92%;font-size:13px;color:#13325E}
-  .var{color:var(--blue-d);font-weight:600}
-  .step{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--line2);font-size:12.5px}
-  .step:last-child{border:0}
-  .step i{width:22px;height:22px;border-radius:50%;background:#F1EFEB;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:600;flex:none}
-  .step small{display:block;color:var(--soft)}
+  .var{background:var(--yellow-l);border-radius:3px;padding:0 3px;font-weight:600;color:var(--ink)}
+  .typing{display:inline-flex;gap:3px;margin-top:10px;padding:8px 10px;background:#F1EFEB;border-radius:12px}
+  .typing i{width:6px;height:6px;border-radius:50%;background:#B5B1A8;animation:dot 1.2s infinite}
+  .typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+  @keyframes dot{30%{transform:translateY(-3px);background:#7F7B72}}
+  .stp{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--line2);font-size:12.5px}
+  .stp:last-child{border:0}
+  .stp i{width:22px;height:22px;border-radius:50%;background:#F1EFEB;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:600;flex:none}
+  .stp:last-child i{background:var(--yellow)}
+  .stp small{display:block;color:var(--soft)}
+  .screen.on .stp{animation:row .5s var(--ease) both}
+  .screen.on .stp:nth-child(3){animation-delay:.1s}.screen.on .stp:nth-child(4){animation-delay:.2s}.screen.on .stp:nth-child(5){animation-delay:.3s}
   .kan{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  .col{background:#FAF9F7;border:1px solid var(--line2);border-radius:10px;padding:10px;min-height:300px}
-  .col h5{font:600 12px Inter;display:flex;justify-content:space-between;margin-bottom:9px}
-  .col h5 span{color:var(--soft);font-weight:500}
-  .card{background:#fff;border:1px solid var(--line2);border-radius:8px;padding:9px;margin-bottom:8px;font-size:12px}
+  .kc{background:#FAF9F7;border:1px solid var(--line2);border-radius:10px;padding:10px;min-height:300px}
+  .kc h5{font:600 12px Inter;display:flex;justify-content:space-between;margin-bottom:9px}
+  .kc h5 span{color:var(--soft);font-weight:500}
+  .card{background:#fff;border:1px solid var(--line2);border-radius:8px;padding:9px;margin-bottom:8px;font-size:12px;transition:transform .2s var(--ease),box-shadow .2s}
+  .card:hover{transform:translateY(-2px) rotate(-1deg);box-shadow:0 6px 14px -8px rgba(0,0,0,.3)}
   .card b{display:block;font-weight:600;font-size:12.5px}
   .card small{color:var(--soft)}
+  .card.mv{animation:mv 4s var(--ease) infinite}
+  @keyframes mv{0%,30%{transform:none;border-color:var(--line2)}45%,100%{transform:translateY(-2px);border-color:var(--yellow-d);box-shadow:0 0 0 3px var(--yellow-l)}}
 
-  /* dark section */
-  .dark{background:var(--dark);color:#F2F0EB;padding:110px 0 0;margin-top:0}
-  .eyebrow{font:600 12px Inter;letter-spacing:.1em;text-transform:uppercase;color:#9FC8FF;margin-bottom:16px}
-  .fam{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:start}
-  .fam h2{font-size:clamp(40px,5vw,64px)}
-  .rot{display:block;color:#9FC8FF;min-height:2.05em}
-  .rot.out{opacity:0;filter:blur(6px);transform:translateY(6px)}
-  .rot{transition:opacity .35s,filter .35s,transform .35s}
-  .fam p{font-size:20px;color:#BDBAB2;margin-top:26px;max-width:540px}
-  .fam p em{font-style:normal;color:var(--amber)}
+  /* reveal */
+  .rv{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+  .rv.in{opacity:1;transform:none}
+
+  /* dark */
+  .dark{background:var(--dark);color:#F2F0EB;padding:120px 0 0;position:relative}
+  .eyebrow{display:inline-block;font:600 12px Inter;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--yellow);padding:3px 8px;border-radius:4px;margin-bottom:18px}
+  .fam{display:grid;grid-template-columns:1.25fr .75fr;gap:40px;align-items:start}
+  .fam h2{font-size:clamp(40px,5vw,66px)}
+  .rot{display:block;color:var(--yellow);min-height:2.05em}
+  .rot .sc{color:#6E6B63}
+  .fam p{font-size:20px;color:#BDBAB2;margin-top:22px;max-width:540px}
+  .fam p.eyebrow{color:var(--ink);font-size:12px;margin-top:0}
+  .dark .hl{color:var(--ink);background-image:linear-gradient(var(--yellow),var(--yellow));border-radius:3px;padding:0 .2em}
   .ghost{text-align:right;font:600 clamp(20px,2.3vw,28px)/1.5 "Inter Tight";letter-spacing:-.03em;color:#5E5C56;padding-top:10px}
-  .ghost div:nth-child(n+4){color:#444340}.ghost div:nth-child(n+6){color:#353431}
-  .lessons{display:grid;grid-template-columns:1fr 1fr;gap:40px;border-top:1px solid #3A3936;margin-top:80px;padding:40px 0 100px}
+  .ghost div{transition:color .4s}
+  .ghost div.on{color:var(--yellow)}
+  .ghost div:nth-child(n+4):not(.on){color:#444340}
+  .lessons{display:grid;grid-template-columns:1fr 1fr;gap:40px;border-top:1px solid #3A3936;margin-top:80px;padding:40px 0 110px}
   .lessons q{display:block;font-size:19px;line-height:1.45;color:#EAE7E0;quotes:"\201C" "\201D"}
-  .lessons q em{font-style:normal;color:var(--amber)}
+  .lessons q em{font-style:normal;color:var(--yellow)}
   .lessons small{display:block;margin-top:14px;color:#8E8B84;font-size:14px}
+  .skyline{display:block;width:100%;height:46px}
 
-  /* features */
-  section.l{padding:110px 0}
-  .sh{max-width:760px}
-  .sh h2{font-size:clamp(40px,5vw,62px)}
-  .sh h2 span{color:var(--blue)}
+  /* sections */
+  section.l{padding:120px 0}
+  .sh{max-width:780px;position:relative}
+  .sh h2{font-size:clamp(40px,5vw,64px)}
   .sh p{font-size:19px;color:var(--muted);margin-top:18px}
-  .feats{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px}
-  .fx{border:1px solid var(--line);border-radius:12px;background:#F8F6F2;height:250px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:18px;
-      background-image:radial-gradient(#D9D5CC 1px,transparent 1px);background-size:14px 14px}
-  .fx .ui{background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 24px -12px rgba(0,0,0,.25);padding:12px;font-size:12.5px;width:100%;max-width:290px}
+  .feats{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:60px}
+  .feat{border-radius:14px;padding:0;transition:transform .35s var(--ease)}
+  .feat:hover{transform:translateY(-6px)}
+  .fx{border:1px solid var(--line);border-radius:14px;background:#F8F6F2;height:256px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:18px;background-image:radial-gradient(#D9D5CC 1px,transparent 1px);background-size:14px 14px;transition:border-color .3s,box-shadow .35s var(--ease)}
+  .feat:hover .fx{border-color:var(--yellow-d);box-shadow:0 6px 0 var(--yellow)}
+  .fx .ui{background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 24px -12px rgba(0,0,0,.25);padding:12px;font-size:12.5px;width:100%;max-width:290px;transition:transform .45s var(--ease)}
+  .feat:hover .fx .ui{transform:scale(1.04) rotate(-1deg)}
   .fx .ui h5{font:600 12.5px Inter;display:flex;align-items:center;gap:7px;margin-bottom:4px}
   .fx .ui p{color:var(--soft);font-size:12px;margin-bottom:9px}
   .srcs{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;max-width:300px}
-  .srcs span{background:#fff;border:1px solid var(--line);border-radius:7px;padding:6px 10px;font-size:12.5px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+  .srcs span{background:#fff;border:1px solid var(--line);border-radius:7px;padding:6px 10px;font-size:12.5px;box-shadow:0 1px 2px rgba(0,0,0,.05);transition:transform .35s var(--ease),background .3s}
+  .feat:hover .srcs span:nth-child(odd){transform:translateY(-4px) rotate(-2deg);background:var(--yellow-l)}
+  .feat:hover .srcs span:nth-child(even){transform:translateY(3px) rotate(2deg)}
   .reason{background:#F4FAF6;border-left:2px solid #2DB36A;padding:7px 9px;font-size:12px;color:#2F5B40;border-radius:0 6px 6px 0;margin-bottom:10px}
   .acts{display:flex;gap:6px}
   .acts span{font:600 11.5px Inter;padding:5px 10px;border-radius:6px;border:1px solid var(--line)}
   .acts span.a{background:var(--blue);color:#fff;border-color:var(--blue)}
   .fx .msg{font-size:12px;max-width:100%;margin-bottom:9px}
   .fu{font-size:11.5px;color:var(--muted);display:flex;justify-content:space-between;border-top:1px solid var(--line2);padding-top:8px}
-  .fu b{color:#17834A;font-weight:600}
-  .feats h3{font-size:24px;letter-spacing:-.035em;margin-top:22px}
-  .feats p{color:var(--muted);font-size:16px;margin-top:8px}
+  .fu b{color:var(--ink);font-weight:600;background:var(--yellow-l);padding:0 4px;border-radius:3px}
+  .feat h3{font-size:24px;letter-spacing:-.035em;margin-top:22px}
+  .feat p{color:var(--muted);font-size:16px;margin-top:8px}
+  .side-note{position:absolute;right:-260px;top:30px;transform:rotate(4deg);font-size:26px;color:var(--ink);display:flex;align-items:flex-start;gap:4px}
+  .side-note svg{width:70px;height:60px;overflow:visible}
+  .side-note path{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 
-  /* safety */
   .safe{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-  .meterbox{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 20px 40px -24px rgba(0,0,0,.25)}
+  .meterbox{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 24px 48px -28px rgba(0,0,0,.3);transition:transform .4s var(--ease)}
+  .meterbox:hover{transform:rotate(-.6deg) translateY(-4px)}
   .meterbox h5{font:600 14px Inter;display:flex;justify-content:space-between}
   .meterbox h5 span{color:var(--soft);font-weight:500}
   .days{display:grid;grid-template-columns:repeat(21,1fr);gap:4px;margin:14px 0 6px}
-  .days i{height:26px;border-radius:4px;background:#2DB36A}
-  .days i.p{background:#BFE7CF}
+  .days i{height:26px;border-radius:4px;background:#EDEAE4;transition:background .3s}
+  .in .days i.d{background:#2DB36A}
+  .in .days i.t{background:var(--yellow);animation:blink 1.4s infinite 2s}
+  @keyframes blink{50%{background:var(--yellow-l)}}
   .lg{display:flex;justify-content:space-between;font-size:11.5px;color:var(--soft)}
   .rowm{display:flex;justify-content:space-between;font-size:13.5px;padding:11px 0;border-top:1px solid var(--line2)}
   .rowm span:last-child{font-weight:600}
   .rowm .ok{color:#17834A}
-  .list{margin-top:30px;display:grid;gap:18px}
-  .list div{display:flex;gap:14px}
+  .list{margin-top:30px;display:grid;gap:16px}
+  .list div{display:flex;gap:14px;padding:12px;border-radius:12px;transition:background .25s}
+  .list div:hover{background:var(--yellow-l)}
   .list svg{flex:none;width:22px;height:22px;margin-top:2px}
   .list b{display:block;font-weight:600}
   .list span{color:var(--muted);font-size:16px}
 
-  /* pricing */
   #pricing{border-top:1px solid var(--line)}
-  .found{margin-top:40px;border:1px solid #F3C9B6;background:#FFF4EE;border-radius:12px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
-  .found b{font-family:"Inter Tight";font-size:20px;letter-spacing:-.03em}
-  .found span{color:#6B4A3C;font-size:15px}
+  .found{margin-top:40px;border:1px solid var(--yellow-d);background:var(--yellow);border-radius:14px;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;position:relative;overflow:hidden}
+  .found::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%);transform:translateX(-100%);animation:shine 4.5s var(--ease) infinite 1s}
+  @keyframes shine{40%,100%{transform:translateX(100%)}}
+  .found b{font-family:"Inter Tight";font-size:21px;letter-spacing:-.03em}
+  .found span{color:#4A3B00;font-size:15px}
+  .found .btn{position:relative;z-index:1;background:var(--ink);color:#fff;border-color:var(--ink);box-shadow:0 2px 0 #000}
+  .found .btn:hover{box-shadow:0 4px 0 #000}
   .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
-  .plan{background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px;display:flex;flex-direction:column}
-  .plan.hl{border:2px solid var(--blue)}
-  .plan .n{font-weight:600;font-size:15px;display:flex;justify-content:space-between}
-  .plan .n span{font-size:11.5px;color:var(--blue-d);background:var(--sky2);padding:2px 8px;border-radius:99px}
+  .plan{background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px;display:flex;flex-direction:column;transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .3s}
+  .plan:hover{transform:translateY(-6px);border-color:var(--yellow-d);box-shadow:0 6px 0 var(--yellow)}
+  .plan.hl2{border:2px solid var(--ink)}
+  .plan .n{font-weight:600;font-size:15px;display:flex;justify-content:space-between;align-items:center}
+  .plan .n span{font-size:11.5px;font-weight:700;background:var(--yellow);padding:2px 8px;border-radius:99px}
   .plan .p{font:600 46px "Inter Tight";letter-spacing:-.04em;margin:14px 0 0}
   .plan .p small{font:500 15px Inter;color:var(--soft);letter-spacing:0}
-  .plan .fp{font-size:13.5px;color:var(--orange);font-weight:600;min-height:21px}
+  .plan .p s{font-size:26px;color:var(--soft);margin-right:6px}
+  .plan .fp{font-size:13.5px;font-weight:600;min-height:21px}
+  .plan .fp em{font-style:normal;background:var(--yellow-l);padding:1px 5px;border-radius:3px}
   .plan ul{list-style:none;margin:20px 0 24px;display:grid;gap:9px;font-size:15px;color:#3D3C38}
   .plan li{display:flex;gap:9px}
   .plan li::before{content:"";width:15px;height:15px;margin-top:4px;flex:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3 3 7-7' fill='none' stroke='%230B63E5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center}
-  .plan .btn{margin-top:auto;justify-content:center}
 
-  /* join */
   #join{background:var(--blue);color:#fff;position:relative;overflow:hidden}
-  #join .map2{position:absolute;inset:0;opacity:.35}
-  #join .in{position:relative;text-align:center}
-  #join h2{font-size:clamp(40px,5vw,64px)}
-  #join p.s{font-size:19px;color:#DCEBFF;margin:16px auto 0;max-width:560px}
-  form.wl{margin:36px auto 0;max-width:760px;background:#fff;border-radius:14px;padding:10px;display:grid;grid-template-columns:1.3fr 1fr 1fr auto;gap:8px;box-shadow:0 20px 40px -20px rgba(0,0,0,.4)}
-  form.wl input{font:500 16px Inter;border:1px solid var(--line);border-radius:8px;padding:12px 13px;color:var(--ink);outline:none;min-width:0;background:#FAF9F7}
-  form.wl input:focus{border-color:var(--blue);background:#fff}
-  form.wl .btn{justify-content:center}
-  .err{min-height:22px;margin-top:12px;font-size:14px;font-weight:600;color:#fff}
-  .ok{display:none;margin:36px auto 0;max-width:520px;background:#fff;color:var(--ink);border-radius:14px;padding:22px 24px;text-align:left}
+  #join .map2{position:absolute;inset:0;width:100%;height:100%;opacity:.35}
+  #join .in2{position:relative;text-align:center}
+  #join h2{font-size:clamp(40px,5vw,66px)}
+  #join h2 .ul path{stroke:var(--yellow)}
+  #join p.s{font-size:19px;color:#DCEBFF;margin:18px auto 0;max-width:560px}
+  form.wl{margin:36px auto 0;max-width:760px;background:#fff;border-radius:14px;padding:10px;display:grid;grid-template-columns:1.3fr 1fr 1fr auto;gap:8px;box-shadow:0 8px 0 var(--yellow),0 30px 50px -20px rgba(0,0,0,.45);transition:transform .3s var(--ease)}
+  form.wl:focus-within{transform:translateY(-3px)}
+  form.wl input{font:500 16px Inter;border:1px solid var(--line);border-radius:8px;padding:12px 13px;color:var(--ink);outline:none;min-width:0;background:#FAF9F7;transition:border-color .2s,background .2s,box-shadow .2s}
+  form.wl input:hover{border-color:#CFCBC2}
+  form.wl input:focus{border-color:var(--ink);background:#fff;box-shadow:0 0 0 3px var(--yellow-l)}
+  .err{min-height:22px;margin-top:14px;font-size:14px;font-weight:600;color:var(--yellow)}
+  .ok{display:none;margin:36px auto 0;max-width:520px;background:#fff;color:var(--ink);border-radius:14px;padding:22px 24px;text-align:left;box-shadow:0 8px 0 var(--yellow);animation:sIn .5s var(--ease)}
   .ok b{font:600 22px "Inter Tight";letter-spacing:-.03em;display:block;margin-bottom:4px}
   .done form.wl{display:none}.done .ok{display:block}
-  #join .fine{font-size:13.5px;color:#CFE2FF;margin-top:6px}
+  #join .fine{font-size:13.5px;color:#CFE2FF;margin-top:4px}
+  .arrow-in{position:absolute;left:calc(50% - 600px);top:-64px;width:120px;color:#fff;font-size:24px;transform:rotate(-6deg)}
+  .arrow-in svg{width:90px;height:70px;overflow:visible}
+  .arrow-in path{fill:none;stroke:var(--yellow);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 
-  /* faq */
-  .faq{display:grid;grid-template-columns:1fr 1fr;gap:34px 60px;margin-top:50px}
-  .faq h3{font:600 19px Inter;letter-spacing:-.01em;margin-bottom:6px}
-  .faq p{color:var(--muted);font-size:16px}
+  .faq{display:grid;grid-template-columns:1fr 1fr;gap:14px 30px;margin-top:50px}
+  .faq details{background:#fff;border:1px solid var(--line);border-radius:12px;transition:border-color .2s,box-shadow .25s var(--ease)}
+  .faq details:hover{border-color:var(--yellow-d)}
+  .faq details[open]{box-shadow:0 4px 0 var(--yellow);border-color:var(--yellow-d)}
+  .faq summary{list-style:none;cursor:pointer;padding:18px 20px;font:600 17px Inter;display:flex;justify-content:space-between;gap:16px;align-items:center}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary i{flex:none;width:26px;height:26px;border-radius:50%;background:var(--bg);display:grid;place-items:center;font-style:normal;transition:transform .3s var(--ease),background .2s}
+  .faq details[open] summary i{transform:rotate(45deg);background:var(--yellow)}
+  .faq details p{padding:0 20px 18px;color:var(--muted);font-size:16px}
   footer{border-top:1px solid var(--line);padding:30px 0;font-size:14px;color:var(--soft)}
   footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
 
+  @media (max-width:1300px){.note{display:none}}
+  @media (max-width:1400px){.side-note{display:none}}
   @media (max-width:980px){
     nav .mid{display:none}
-    .app{grid-template-columns:1fr}
+    .app{grid-template-columns:1fr;min-height:0}
     .side{display:none}
     .fam,.safe,.lessons{grid-template-columns:1fr}
-    .ghost{display:none}
+    .ghost,.side-note,.arrow-in{display:none}
     .feats,.plans{grid-template-columns:1fr}
     .camp{grid-template-columns:1fr}
     .kan{grid-template-columns:1fr 1fr}
+    .kc{min-height:150px}
     form.wl{grid-template-columns:1fr 1fr}
     form.wl .btn{grid-column:1/-1}
     .faq{grid-template-columns:1fr}
+    .lessons{gap:28px}
   }
   @media (max-width:600px){
-    .hero{padding-top:60px}
-    .hero p{font-size:18px}
-    .tabs{overflow-x:auto}
-    .tab{white-space:nowrap}
+    body{font-size:16px}
+    .hero{padding-top:56px}
+    .hero p.sub{font-size:18px}
+    .hero .ctas{flex-direction:column;align-items:stretch;max-width:340px;margin-left:auto;margin-right:auto}
+    .hero .tag{font-size:13px}
+    .stage{margin-top:44px}
+    .app-wrap{padding:0 12px}
+    .tabs{overflow-x:auto;scrollbar-width:none}
+    .tab{white-space:nowrap;padding:8px 11px 10px;font-size:13px}
     .t .hide{display:none}
-    .main{padding:16px 14px}
-    .kan .col:nth-child(n+3){display:none}
+    .main{padding:16px 12px}
+    .who small{max-width:150px}
     form.wl{grid-template-columns:1fr}
-    section.l{padding:80px 0}
-    .dark{padding-top:80px}
+    section.l{padding:84px 0}
+    .dark{padding-top:84px}
+    .lessons{margin-top:50px;padding-bottom:80px}
     .ann{font-size:13px}
+    .found{padding:18px}
+    .fx{height:230px}
   }
-  @media (prefers-reduced-motion:reduce){.rot{transition:none}}
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    .w,.fade,.tilt,.rv,.note{opacity:1!important;transform:none!important;filter:none!important}
+    .ul path,.note path{stroke-dashoffset:0!important}
+    .hl{background-size:100% 100%!important}
+  }
 </style>
 </head>
 <body>
 
 <div class="ann"><b>NEW</b>15 founding spots for personal trainers.<a href="#join">Join the waitlist ›</a></div>
 
-<nav>
+<nav id="nav">
   <div class="wrap">
     <a class="logo" href="#top">
-      <svg viewBox="0 0 26 26" aria-hidden="true"><rect width="26" height="26" rx="7" fill="#0B63E5"/><path d="M13 5.5c-3.3 0-6 2.6-6 5.9 0 4.3 6 9.1 6 9.1s6-4.8 6-9.1c0-3.3-2.7-5.9-6-5.9z" fill="#fff"/><circle cx="13" cy="11.4" r="2.3" fill="#FF5A1F"/></svg>
+      <svg viewBox="0 0 26 26" aria-hidden="true"><rect width="26" height="26" rx="7" fill="#0B63E5"/><path d="M13 5.5c-3.3 0-6 2.6-6 5.9 0 4.3 6 9.1 6 9.1s6-4.8 6-9.1c0-3.3-2.7-5.9-6-5.9z" fill="#fff"/><circle cx="13" cy="11.4" r="2.3" fill="#FFD84A"/></svg>
       LeadOS
     </a>
     <div class="mid">
@@ -255,11 +376,12 @@
 
 <header class="hero" id="top">
   <div class="wrap">
-    <h1>Your next clients are already in your city.</h1>
-    <p>LeadOS is Instagram outreach for personal trainers. It finds people near you who want to get in shape, checks they fit, and sends a personal first DM from your own account.</p>
-    <div class="ctas">
-      <a class="btn pri" href="#join">Join the waitlist</a>
-      <a class="btn sec" href="#pricing">See pricing</a>
+    <a class="tag fade" href="#pricing"><span>15 spots</span> Founding price for the first trainers <span style="background:none;padding:0">→</span></a>
+    <h1 id="h1">Your next clients are already in <span class="ul">your city.<svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path d="M4 14 C 60 4, 140 4, 296 10"/></svg></span></h1>
+    <p class="sub fade" style="transition-delay:.55s">LeadOS is Instagram outreach for personal trainers. It finds people near you who want to get in shape, checks they fit, and sends a personal first DM from your own account.</p>
+    <div class="ctas fade" style="transition-delay:.7s">
+      <a class="btn pri" href="#join">Join the waitlist <span class="ar">→</span></a>
+      <a class="btn sec" href="#how">See how it works</a>
     </div>
   </div>
 
@@ -267,121 +389,125 @@
     <div class="map" aria-hidden="true">
       <svg viewBox="0 0 1440 400" preserveAspectRatio="xMidYMid slice">
         <rect width="1440" height="400" fill="#0B63E5"/>
-        <g stroke="#2E7BEE" stroke-width="10" fill="none">
-          <path d="M-20 60 H1460"/><path d="M-20 170 H1460"/><path d="M-20 290 H1460"/>
-          <path d="M90 -20 V420"/><path d="M260 -20 V420"/><path d="M1180 -20 V420"/><path d="M1350 -20 V420"/>
-        </g>
-        <g stroke="#2470E8" stroke-width="4" fill="none">
-          <path d="M-20 115 H1460"/><path d="M-20 230 H1460"/><path d="M-20 345 H1460"/>
-          <path d="M175 -20 V420"/><path d="M1265 -20 V420"/><path d="M30 -20 V420"/><path d="M1410 -20 V420"/>
-        </g>
+        <g stroke="#2E7BEE" stroke-width="10" fill="none"><path d="M-20 60 H1460"/><path d="M-20 170 H1460"/><path d="M-20 290 H1460"/><path d="M90 -20 V420"/><path d="M260 -20 V420"/><path d="M1180 -20 V420"/><path d="M1350 -20 V420"/></g>
+        <g stroke="#2470E8" stroke-width="4" fill="none"><path d="M-20 115 H1460"/><path d="M-20 230 H1460"/><path d="M-20 345 H1460"/><path d="M175 -20 V420"/><path d="M1265 -20 V420"/><path d="M30 -20 V420"/><path d="M1410 -20 V420"/></g>
         <path d="M-20 390 C 200 300, 300 200, 520 120 S 900 20, 1460 10" stroke="#5B9BF5" stroke-width="16" fill="none"/>
         <g fill="#1A57C9"><rect x="110" y="75" width="130" height="80" rx="4"/><rect x="110" y="185" width="50" height="90" rx="4"/><rect x="190" y="185" width="50" height="35" rx="4"/><rect x="1200" y="75" width="130" height="80" rx="4"/><rect x="1200" y="185" width="130" height="90" rx="4"/><rect x="1370" y="305" width="80" height="80" rx="4"/></g>
-        <rect x="190" y="235" width="50" height="40" rx="4" fill="#1F9A5B"/>
-        <rect x="1285" y="305" width="45" height="80" rx="4" fill="#1F9A5B"/>
-        <g fill="#FF5A1F" stroke="#fff" stroke-width="3"><circle cx="215" cy="140" r="8"/><circle cx="60" cy="250" r="8"/><circle cx="1240" cy="215" r="8"/><circle cx="1385" cy="130" r="8"/><circle cx="1300" cy="355" r="8"/></g>
+        <rect x="190" y="235" width="50" height="40" rx="4" fill="#1F9A5B"/><rect x="1285" y="305" width="45" height="80" rx="4" fill="#1F9A5B"/>
+        <g fill="#FFD84A" stroke="#1A1A18" stroke-width="3"><circle class="pin" cx="215" cy="140" r="9"/><circle class="pin" cx="60" cy="250" r="9"/><circle class="pin" cx="1240" cy="215" r="9"/><circle class="pin" cx="1385" cy="130" r="9"/><circle class="pin" cx="1300" cy="355" r="9"/></g>
       </svg>
     </div>
     <div class="app-wrap">
-      <div class="tabs" role="tablist">
-        <button class="tab on" data-s="s1" role="tab"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>Lead finder</button>
-        <button class="tab" data-s="s2" role="tab"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 3.5h12v8H6l-4 3z"/></svg>Campaign</button>
-        <button class="tab" data-s="s3" role="tab"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2.5" width="3.5" height="11" rx="1"/><rect x="6.5" y="2.5" width="3.5" height="7" rx="1"/><rect x="11" y="2.5" width="3.5" height="9" rx="1"/></svg>Pipeline</button>
+      <div class="note n1 hand" aria-hidden="true"><span>2 km from your gym</span>
+        <svg width="140" height="70" viewBox="0 0 140 70"><path d="M20 4 C 30 40, 70 58, 130 52"/><path d="M118 42 L 131 52 L 116 60"/></svg>
       </div>
-      <div class="app">
-        <aside class="side" aria-hidden="true">
-          <div class="acct"><i></i><div>@coach.daniel<small>Personal trainer</small></div></div>
-          <h6>Leads</h6>
-          <a class="on" href="#top">Lead finder</a>
-          <a href="#top">Lists <span>4</span></a>
-          <h6>Outreach</h6>
-          <a href="#top">Campaigns <span>2</span></a>
-          <a href="#top">Inbox <span>3</span></a>
-          <h6>Clients</h6>
-          <a href="#top">Pipeline</a>
-          <a href="#top">Contacts</a>
-          <div class="warm">Account warm-up<div class="bar"><i></i></div><div style="margin-top:6px">Done. Ready to send.</div></div>
-        </aside>
-        <div class="main">
-          <div class="screen on" id="s1">
-            <div class="mh"><div><h4>People near you</h4><p>From 3 local sources, checked against your offer</p></div><span class="mbtn">Add to campaign</span></div>
-            <div class="chips"><span class="chip">📍 <b>Posted at</b> Iron House Gym</span><span class="chip"><b>Follows</b> @eastside.fitness</span><span class="chip"><b>Tagged</b> #riversidepark</span></div>
-            <table class="t">
-              <tr><th>Person</th><th>Fit</th><th class="hide">Found through</th><th class="hide">Status</th></tr>
-              <tr><td><div class="who"><span class="av" style="background:#7C5CFF">MR</span><div><b>@maya.runs</b><small>"Week one back. Legs are dead."</small></div></div></td><td><span class="pill fit">Good fit</span></td><td class="src hide">Posted at Iron House Gym</td><td class="hide">Ready</td></tr>
-              <tr><td><div class="who"><span class="av" style="background:#E0791F">JT</span><div><b>@jordan_t</b><small>"Wedding in June. Help."</small></div></div></td><td><span class="pill fit">Good fit</span></td><td class="src hide">#riversidepark</td><td class="hide">Ready</td></tr>
-              <tr><td><div class="who"><span class="av" style="background:#18A36A">SK</span><div><b>@sam.kowal</b><small>New dad, wants to get back in shape</small></div></div></td><td><span class="pill may">Maybe</span></td><td class="src hide">Follows @eastside.fitness</td><td class="hide">Review</td></tr>
-              <tr><td><div class="who"><span class="av" style="background:#C2410C">LP</span><div><b>@lena.lifts</b><small>Started lifting this month</small></div></div></td><td><span class="pill fit">Good fit</span></td><td class="src hide">Posted at Iron House Gym</td><td class="hide">Ready</td></tr>
-              <tr><td><div class="who"><span class="av" style="background:#8E8B84">PT</span><div><b>@pt.marcus</b><small>Personal trainer</small></div></div></td><td><span class="pill no">Skip</span></td><td class="src hide">Follows @eastside.fitness</td><td class="hide">Another trainer</td></tr>
-            </table>
-          </div>
-          <div class="screen" id="s2">
-            <div class="mh"><div><h4>First week back</h4><p>New gym-goers near you · 12 people</p></div><span class="mbtn g">Paused until 9:00</span></div>
-            <div class="camp">
-              <div class="box"><h5>First message (you approve each one)</h5>
-                <div class="msg">Hey <span class="var">Maya</span>, saw your <span class="var">week one</span> post from Iron House. The first month is the hardest part. I coach a few people nearby, happy to send you a simple plan if you want one?</div>
-              </div>
-              <div class="box"><h5>Sequence</h5>
-                <div class="step"><i>1</i><div>Follow profile<small>A day before the message</small></div></div>
-                <div class="step"><i>2</i><div>First message<small>Max 20 a day, 5+ minutes apart</small></div></div>
-                <div class="step"><i>3</i><div>Follow-up<small>After 3 days, only if no reply</small></div></div>
-                <div class="step"><i>✓</i><div>They reply<small>Sequence stops, chat goes to your inbox</small></div></div>
+      <div class="note n2 hand" aria-hidden="true"><span>you approve every DM</span>
+        <svg width="140" height="70" viewBox="0 0 140 70" style="margin-left:auto"><path d="M122 4 C 116 36, 80 54, 12 50"/><path d="M24 40 L 11 50 L 25 59"/></svg>
+      </div>
+      <div class="tilt" id="tilt">
+        <div class="tabs" role="tablist">
+          <button class="tab on" data-s="s1" role="tab"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>Lead finder<span class="prog"><i></i></span></button>
+          <button class="tab" data-s="s2" role="tab"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 3.5h12v8H6l-4 3z"/></svg>Campaign<span class="prog"><i></i></span></button>
+          <button class="tab" data-s="s3" role="tab"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2.5" width="3.5" height="11" rx="1"/><rect x="6.5" y="2.5" width="3.5" height="7" rx="1"/><rect x="11" y="2.5" width="3.5" height="9" rx="1"/></svg>Pipeline<span class="prog"><i></i></span></button>
+        </div>
+        <div class="app">
+          <aside class="side" aria-hidden="true">
+            <div class="acct"><i></i><div>@coach.daniel<small>Personal trainer</small></div></div>
+            <h6>Leads</h6>
+            <a class="on" href="#top">Lead finder</a>
+            <a href="#top">Lists <span>4</span></a>
+            <h6>Outreach</h6>
+            <a href="#top">Campaigns <span>2</span></a>
+            <a href="#top">Inbox <span>3</span></a>
+            <h6>Clients</h6>
+            <a href="#top">Pipeline</a>
+            <a href="#top">Contacts</a>
+            <div class="warm">Account warm-up<div class="bar"><i></i></div><div style="margin-top:6px">Done. Ready to send.</div></div>
+          </aside>
+          <div class="main">
+            <div class="screen on" id="s1">
+              <div class="mh"><div><h4>People near you</h4><p>From 3 local sources, checked against your offer</p></div><span class="mbtn">Add to campaign</span></div>
+              <div class="chips"><span class="chip">📍 <b>Posted at</b> Iron House Gym</span><span class="chip"><b>Follows</b> @eastside.fitness</span><span class="chip"><b>Tagged</b> #riversidepark</span></div>
+              <table class="t">
+                <tr><th>Person</th><th>Fit</th><th class="hide">Found through</th><th class="hide">Status</th></tr>
+                <tr class="r"><td><div class="who"><span class="av" style="background:#7C5CFF">MR</span><div><b>@maya.runs</b><small>"Week one back. Legs are dead."</small></div></div></td><td><span class="pill fit">Good fit</span></td><td class="src hide">Posted at Iron House Gym</td><td class="hide">Ready</td></tr>
+                <tr class="r"><td><div class="who"><span class="av" style="background:#E0791F">JT</span><div><b>@jordan_t</b><small>"Wedding in June. Help."</small></div></div></td><td><span class="pill fit">Good fit</span></td><td class="src hide">#riversidepark</td><td class="hide">Ready</td></tr>
+                <tr class="r"><td><div class="who"><span class="av" style="background:#18A36A">SK</span><div><b>@sam.kowal</b><small>New dad, wants to get back in shape</small></div></div></td><td><span class="pill may">Maybe</span></td><td class="src hide">Follows @eastside.fitness</td><td class="hide">Review</td></tr>
+                <tr class="r"><td><div class="who"><span class="av" style="background:#C2410C">LP</span><div><b>@lena.lifts</b><small>Started lifting this month</small></div></div></td><td><span class="pill fit">Good fit</span></td><td class="src hide">Posted at Iron House Gym</td><td class="hide">Ready</td></tr>
+                <tr class="r"><td><div class="who"><span class="av" style="background:#8E8B84">PT</span><div><b>@pt.marcus</b><small>Personal trainer</small></div></div></td><td><span class="pill no">Skip</span></td><td class="src hide">Follows @eastside.fitness</td><td class="hide">Another trainer</td></tr>
+              </table>
+            </div>
+            <div class="screen" id="s2">
+              <div class="mh"><div><h4>First week back</h4><p>New gym-goers near you · 12 people</p></div><span class="mbtn g">Next send 9:05</span></div>
+              <div class="camp">
+                <div class="box"><h5>First message (you approve each one)</h5>
+                  <div class="msg">Hey <span class="var">Maya</span>, saw your <span class="var">week one</span> post from Iron House. The first month is the hardest part. I coach a few people nearby, happy to send you a simple plan if you want one?</div>
+                  <div class="typing"><i></i><i></i><i></i></div>
+                </div>
+                <div class="box"><h5>Sequence</h5>
+                  <div class="stp"><i>1</i><div>Follow profile<small>A day before the message</small></div></div>
+                  <div class="stp"><i>2</i><div>First message<small>Max 20 a day, 5+ minutes apart</small></div></div>
+                  <div class="stp"><i>3</i><div>Follow-up<small>After 3 days, only if no reply</small></div></div>
+                  <div class="stp"><i>✓</i><div>They reply<small>Sequence stops, chat goes to your inbox</small></div></div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="screen" id="s3">
-            <div class="mh"><div><h4>Pipeline</h4><p>Everyone you've messaged, in one place</p></div><span class="mbtn g">Export</span></div>
-            <div class="kan">
-              <div class="col"><h5>Messaged <span>8</span></h5><div class="card"><b>@lena.lifts</b><small>Today</small></div><div class="card"><b>@jordan_t</b><small>Yesterday</small></div></div>
-              <div class="col"><h5>Replied <span>2</span></h5><div class="card"><b>@maya.runs</b><small>"Yes please!"</small></div></div>
-              <div class="col"><h5>Call booked <span>1</span></h5><div class="card"><b>@sam.kowal</b><small>Thu, 6:30 pm</small></div></div>
-              <div class="col"><h5>Client <span>0</span></h5></div>
+            <div class="screen" id="s3">
+              <div class="mh"><div><h4>Pipeline</h4><p>Everyone you've messaged, in one place</p></div><span class="mbtn g">Export</span></div>
+              <div class="kan">
+                <div class="kc"><h5>Messaged <span>8</span></h5><div class="card"><b>@lena.lifts</b><small>Today</small></div><div class="card"><b>@jordan_t</b><small>Yesterday</small></div></div>
+                <div class="kc"><h5>Replied <span>2</span></h5><div class="card mv"><b>@maya.runs</b><small>"Yes please!"</small></div></div>
+                <div class="kc"><h5>Call booked <span>1</span></h5><div class="card"><b>@sam.kowal</b><small>Thu, 6:30 pm</small></div></div>
+                <div class="kc"><h5>Client <span>0</span></h5></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div style="height:70px"></div>
+    <div style="height:72px"></div>
   </div>
 </header>
 
 <section class="dark">
   <div class="wrap">
-    <div class="fam">
+    <div class="fam rv">
       <div>
         <p class="eyebrow">Sound familiar?</p>
         <h2>This week, you<span class="rot" id="rot">posted three reels.</span></h2>
-        <p>And your schedule still has <em>open slots</em>. It's not your fault. Instagram doesn't send clients to trainers who wait for them.</p>
+        <p>And your schedule still has <span class="hl">open slots.</span> It's not your fault. Instagram doesn't send clients to trainers who wait for them.</p>
       </div>
-      <div class="ghost" aria-hidden="true">
+      <div class="ghost" id="ghost" aria-hidden="true">
         <div>posted three reels.</div><div>checked your DMs again.</div><div>answered a "how much?"</div><div>never heard back.</div><div>posted a transformation.</div><div>waited.</div>
       </div>
     </div>
-    <div class="lessons">
+    <div class="lessons rv">
       <div><q>We spent three days sending cold DMs by hand. <em>Finding the right people took longer than writing to them.</em></q><small>From our own outreach test</small></div>
       <div><q>One of our accounts sent too many messages too fast. <em>Instagram blocked its DMs for about four days.</em></q><small>Why LeadOS sends slowly</small></div>
     </div>
   </div>
+  <svg class="skyline" viewBox="0 0 1440 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 46 V30 h60 V18 h40 V30 h70 V10 h30 V24 h90 V14 h50 V30 h80 V6 h24 V30 h110 V20 h60 V30 h70 V12 h40 V26 h90 V16 h30 V30 h80 V8 h26 V30 h100 V22 h50 V30 h70 V14 h40 V30 h120 V46 Z" fill="#F4F2EE"/></svg>
 </section>
 
 <section class="l" id="how">
   <div class="wrap">
-    <div class="sh">
-      <h2>Stop waiting for DMs. <span>Send the first one.</span></h2>
+    <div class="sh rv">
+      <h2>Stop waiting for DMs. <span class="hl">Send the first one.</span></h2>
       <p>Tell LeadOS what you offer and who you train. It finds them, checks them, and messages them. You stay in charge of every message.</p>
+      <div class="side-note hand" aria-hidden="true"><svg viewBox="0 0 70 60"><path d="M66 6 C 40 8, 18 22, 10 52"/><path d="M3 41 L 10 53 L 21 45"/></svg>you just hit approve</div>
     </div>
     <div class="feats">
-      <div>
+      <div class="feat rv">
         <div class="fx"><div class="srcs"><span>📍 Posted at your gym</span><span>Follows local gyms</span><span>#yourcity hashtags</span><span>Commented on a post</span><span>Liked a post</span></div></div>
         <h3>Find people near you.</h3>
         <p>LeadOS looks where local people already show up, and pulls the ones talking about getting in shape.</p>
       </div>
-      <div>
+      <div class="feat rv" style="transition-delay:.1s">
         <div class="fx"><div class="ui"><h5><span class="pill fit">Good fit</span> @maya.runs</h5><p>Checked against your offer</p><div class="reason">Just started training, posts from a gym 2 km from you, no coach yet.</div><div class="acts"><span class="a">Add to campaign</span><span>Skip</span></div></div></div>
         <h3>AI checks who fits.</h3>
         <p>Each profile is read against what you sell, with the reason shown. Other trainers and bots get skipped.</p>
       </div>
-      <div>
+      <div class="feat rv" style="transition-delay:.2s">
         <div class="fx"><div class="ui"><div class="msg">Hey Maya, saw your week one post. Happy to send you a simple plan if you want one?</div><div class="fu"><span>Follow-up in 3 days</span><b>Stops if she replies</b></div></div></div>
         <h3>The first DM, then the follow-up.</h3>
         <p>A personal message goes out from your own Instagram. When someone replies, the sequence stops and the chat is yours.</p>
@@ -392,17 +518,17 @@
 
 <section class="l" id="safety" style="padding-top:0">
   <div class="wrap safe">
-    <div>
-      <div class="sh"><h2>Careful with your account, by default.</h2></div>
+    <div class="rv">
+      <div class="sh"><h2>Careful with your account, <span class="hl">by default.</span></h2></div>
       <div class="list">
-        <div><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" fill="#E8F2FF"/><path d="M6.5 11.5l3 3 6-6.5" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p><b>New accounts warm up first</b><span>If your account is new to outreach, nothing goes out until it's ready.</span></p></div>
-        <div><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" fill="#E8F2FF"/><path d="M6.5 11.5l3 3 6-6.5" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p><b>A daily limit, minutes apart</b><span>A few messages a day, spaced out the way a person sends them.</span></p></div>
-        <div><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" fill="#E8F2FF"/><path d="M6.5 11.5l3 3 6-6.5" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p><b>From your own browser</b><span>Messages go from your account, in your Chrome. Not from a server.</span></p></div>
+        <div><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" fill="#FFD84A"/><path d="M6.5 11.5l3 3 6-6.5" stroke="#1A1A18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p><b>New accounts warm up first</b><span>If your account is new to outreach, nothing goes out until it's ready.</span></p></div>
+        <div><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" fill="#FFD84A"/><path d="M6.5 11.5l3 3 6-6.5" stroke="#1A1A18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p><b>A daily limit, minutes apart</b><span>A few messages a day, spaced out the way a person sends them.</span></p></div>
+        <div><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" fill="#FFD84A"/><path d="M6.5 11.5l3 3 6-6.5" stroke="#1A1A18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p><b>From your own browser</b><span>Messages go from your account, in your Chrome. Not from a server.</span></p></div>
       </div>
     </div>
-    <div class="meterbox" aria-hidden="true">
+    <div class="meterbox rv" id="meter" aria-hidden="true">
       <h5>Warm-up <span>Day 15 of 21</span></h5>
-      <div class="days"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="p"></i><i class="p"></i><i class="p"></i><i class="p"></i><i class="p"></i><i class="p"></i></div>
+      <div class="days" id="days"></div>
       <div class="lg"><span>Started</span><span>Sending opens</span></div>
       <div style="height:16px"></div>
       <div class="rowm"><span>Daily limit</span><span>20 messages</span></div>
@@ -414,24 +540,24 @@
 
 <section class="l" id="pricing">
   <div class="wrap">
-    <div class="sh"><h2>Simple pricing.</h2><p>Priced by the Instagram accounts you connect.</p></div>
-    <div class="found"><div><b>15 founding spots.</b> <span>The first 15 trainers on the waitlist get 7 days of Starter free, then $49 a month instead of $69, for as long as they stay.</span></div><a class="btn pri" href="#join">Claim a spot</a></div>
+    <div class="sh rv"><h2>Simple pricing.</h2><p>Priced by the Instagram accounts you connect.</p></div>
+    <div class="found rv"><div><b>15 founding spots.</b> <span>The first 15 trainers on the waitlist get 7 days of Starter free, then $49 a month instead of $69, for as long as they stay.</span></div><a class="btn" href="#join">Claim a spot <span class="ar">→</span></a></div>
     <div class="plans">
-      <div class="plan hl">
+      <div class="plan hl2 rv">
         <div class="n">Starter <span>For one trainer</span></div>
         <div class="p">$69 <small>/ month</small></div>
-        <div class="fp">$49 for founding spots</div>
+        <div class="fp"><em>$49 for founding spots</em></div>
         <ul><li>1 Instagram account</li><li>1 team member</li><li>500 AI-written openers a month</li><li>500 search credits a month</li><li>Lead lists, CRM and pipelines</li><li>Reviewed automatic outreach</li><li>Reply detection and handoff to you</li><li>Standard support</li></ul>
-        <a class="btn pri" href="#join">Join the waitlist</a>
+        <a class="btn pri" href="#join">Join the waitlist <span class="ar">→</span></a>
       </div>
-      <div class="plan">
+      <div class="plan rv" style="transition-delay:.1s">
         <div class="n">Growth</div>
         <div class="p">$99 <small>/ month</small></div>
         <div class="fp"></div>
         <ul><li>3 Instagram accounts</li><li>3 team members</li><li>1,500 AI-written openers a month</li><li>1,500 search credits a month</li><li>Lead lists, CRM and pipelines</li><li>Reviewed automatic outreach</li><li>Reply detection and handoff to you</li><li>Priority support</li></ul>
         <a class="btn sec" href="#join">Join the waitlist</a>
       </div>
-      <div class="plan">
+      <div class="plan rv" style="transition-delay:.2s">
         <div class="n">Agency</div>
         <div class="p">$199 <small>/ month</small></div>
         <div class="fp"></div>
@@ -444,14 +570,15 @@
 
 <section class="l" id="join">
   <svg class="map2" viewBox="0 0 1440 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g stroke="#5B9BF5" stroke-width="8" fill="none"><path d="M-20 80 H1460"/><path d="M-20 250 H1460"/><path d="M-20 420 H1460"/><path d="M120 -20 V520"/><path d="M420 -20 V520"/><path d="M1020 -20 V520"/><path d="M1320 -20 V520"/></g><path d="M-20 480 C 300 380, 500 260, 760 200 S 1200 80, 1460 40" stroke="#8DBBFA" stroke-width="14" fill="none"/></svg>
-  <div class="wrap in wl-box">
-    <h2>Get your next clients from Instagram.</h2>
+  <div class="wrap in2 wl-box rv">
+    <div class="arrow-in hand" aria-hidden="true">only 15 spots<svg viewBox="0 0 90 70"><path d="M10 6 C 14 40, 40 66, 88 66"/><path d="M76 57 L 89 66 L 75 73"/></svg></div>
+    <h2>Get your next clients from <span class="ul">Instagram.<svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path d="M4 12 C 80 5, 180 4, 296 12"/></svg></span></h2>
     <p class="s">Join the waitlist. The first 15 trainers get a founding spot.</p>
     <form class="wl" novalidate>
       <input type="email" name="email" placeholder="Email" required autocomplete="email" aria-label="Email">
       <input type="text" name="instagram" placeholder="@instagram" required aria-label="Instagram handle">
       <input type="text" name="city" placeholder="City" required autocomplete="address-level2" aria-label="City">
-      <button class="btn pri" type="submit">Join the waitlist</button>
+      <button class="btn yel" type="submit">Join the waitlist <span class="ar">→</span></button>
     </form>
     <div class="ok"><b>You're on the list.</b>We'll email you when your spot opens. If you're one of the first 15, the founding spot is yours.</div>
     <p class="err" role="alert"></p>
@@ -461,14 +588,14 @@
 
 <section class="l" id="faq">
   <div class="wrap">
-    <div class="sh"><h2>Questions.</h2></div>
-    <div class="faq">
-      <div><h3>Will this get my account blocked?</h3><p>Any tool that sends DMs carries some risk. LeadOS keeps it low: a warm-up for new accounts, a daily limit, minutes between messages, and sending from your own browser.</p></div>
-      <div><h3>Is it spam?</h3><p>You approve who gets a message, AI skips people who don't fit, and every first DM is written for that person. It's a handful of messages a day.</p></div>
-      <div><h3>Can it really find people in my city?</h3><p>It looks where local people show up: posts from your area's gyms and parks, followers of the gyms near you, your city's hashtags.</p></div>
-      <div><h3>Does my computer need to be on?</h3><p>Yes, while a campaign runs. Messages go out from your own Chrome.</p></div>
-      <div><h3>What's a founding spot?</h3><p>The first 15 trainers on the waitlist get 7 days of Starter free, then $49 a month instead of $69, for as long as they stay subscribed.</p></div>
-      <div><h3>What if the 15 spots are gone?</h3><p>The waitlist stays open, and you'll get in at the normal price.</p></div>
+    <div class="sh rv"><h2>Questions.</h2></div>
+    <div class="faq rv">
+      <details><summary>Will this get my account blocked? <i>+</i></summary><p>Any tool that sends DMs carries some risk. LeadOS keeps it low: a warm-up for new accounts, a daily limit, minutes between messages, and sending from your own browser.</p></details>
+      <details><summary>Is it spam? <i>+</i></summary><p>You approve who gets a message, AI skips people who don't fit, and every first DM is written for that person. It's a handful of messages a day.</p></details>
+      <details><summary>Can it really find people in my city? <i>+</i></summary><p>It looks where local people show up: posts from your area's gyms and parks, followers of the gyms near you, your city's hashtags.</p></details>
+      <details><summary>Does my computer need to be on? <i>+</i></summary><p>Yes, while a campaign runs. Messages go out from your own Chrome.</p></details>
+      <details><summary>What's a founding spot? <i>+</i></summary><p>The first 15 trainers on the waitlist get 7 days of Starter free, then $49 a month instead of $69, for as long as they stay subscribed.</p></details>
+      <details><summary>What if the 15 spots are gone? <i>+</i></summary><p>The waitlist stays open, and you'll get in at the normal price.</p></details>
     </div>
   </div>
 </section>
@@ -481,23 +608,87 @@
 </footer>
 
 <script>
-  // tabs
-  document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => {
-    document.querySelectorAll(".tab").forEach(x => x.classList.toggle("on", x === t));
-    document.querySelectorAll(".screen").forEach(s => s.classList.toggle("on", s.id === t.dataset.s));
-  }));
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // rotating line
+  // hero headline: split into words, then play
+  const h1 = document.getElementById("h1");
+  [...h1.childNodes].forEach(n => {
+    if (n.nodeType === 3) {
+      const frag = document.createDocumentFragment();
+      n.textContent.split(/(\s+)/).forEach(t => {
+        if (!t) return;
+        if (/^\s+$/.test(t)) { frag.appendChild(document.createTextNode(t)); return; }
+        const s = document.createElement("span"); s.className = "w"; s.textContent = t; frag.appendChild(s);
+      });
+      n.replaceWith(frag);
+    } else { n.classList.add("w"); }
+  });
+  h1.querySelectorAll(".w").forEach((w, i) => w.style.transitionDelay = (i * 70) + "ms");
+  requestAnimationFrame(() => requestAnimationFrame(() => document.querySelector(".hero").classList.add("go")));
+
+  // sticky nav border
+  const nav = document.getElementById("nav");
+  addEventListener("scroll", () => nav.classList.toggle("sc", scrollY > 40), {passive:true});
+
+  // tabs with autoplay
+  const tabs = [...document.querySelectorAll(".tab")], screens = [...document.querySelectorAll(".screen")];
+  let cur = 0, auto = !reduce, timer;
+  function show(i, user) {
+    cur = i;
+    tabs.forEach((t, k) => { t.classList.toggle("on", k === i); t.classList.remove("run"); });
+    screens.forEach((s, k) => s.classList.toggle("on", k === i));
+    if (user) auto = false;
+    clearTimeout(timer);
+    if (auto) { void tabs[i].offsetWidth; tabs[i].classList.add("run"); timer = setTimeout(() => show((cur + 1) % tabs.length), 6000); }
+  }
+  tabs.forEach((t, i) => t.addEventListener("click", () => show(i, true)));
+  setTimeout(() => show(0), 1200);
+
+  // gentle tilt on the app
+  const tilt = document.getElementById("tilt");
+  if (!reduce && matchMedia("(hover:hover)").matches) {
+    const stage = document.querySelector(".stage");
+    stage.addEventListener("mousemove", e => {
+      const r = tilt.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      tilt.style.transform = `rotateX(${(-y * 3).toFixed(2)}deg) rotateY(${(x * 4).toFixed(2)}deg)`;
+    });
+    stage.addEventListener("mouseleave", () => tilt.style.transform = "");
+  }
+
+  // rotating line with scramble
   const lines = ["posted three reels.", "checked your DMs again.", "answered a “how much?”", "never heard back.", "posted a transformation.", "waited."];
-  const rot = document.getElementById("rot"); let k = 0;
-  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => {
-    rot.classList.add("out");
-    setTimeout(() => { k = (k + 1) % lines.length; rot.textContent = lines[k]; rot.classList.remove("out"); }, 350);
-  }, 2400);
+  const rot = document.getElementById("rot"), ghost = [...document.querySelectorAll("#ghost div")];
+  const chars = "abcdefghijklmnopqrstuvwxyz#%&*";
+  let li = 0;
+  function scramble(to) {
+    let f = 0; const total = 22;
+    const iv = setInterval(() => {
+      f++;
+      const done = Math.floor(to.length * f / total);
+      let out = to.slice(0, done);
+      for (let i = done; i < to.length; i++) out += to[i] === " " ? " " : chars[Math.random() * chars.length | 0];
+      rot.innerHTML = out.slice(0, done) + '<span class="sc">' + out.slice(done) + "</span>";
+      if (f >= total) { clearInterval(iv); rot.textContent = to; }
+    }, 32);
+  }
+  if (!reduce) setInterval(() => {
+    li = (li + 1) % lines.length; scramble(lines[li]);
+    ghost.forEach((g, k) => g.classList.toggle("on", k === li));
+  }, 2800);
+  ghost[0] && ghost[0].classList.add("on");
 
-  // Where signups go. Empty until the destination is decided: then signups
-  // stay in this browser only (for the demo). Set it to a URL that accepts
-  // a JSON POST {email, instagram, city, ts}.
+  // warm-up days
+  const days = document.getElementById("days");
+  for (let i = 1; i <= 21; i++) { const d = document.createElement("i"); d.className = i < 15 ? "d" : i === 15 ? "t" : ""; d.style.transitionDelay = (i * 45) + "ms"; days.appendChild(d); }
+
+  // scroll reveal
+  const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add("in"); io.unobserve(x.target); } }), {threshold:.15, rootMargin:"0px 0px -40px 0px"});
+  document.querySelectorAll(".rv,.hl").forEach(el => io.observe(el));
+
+  // waitlist form. Where signups go: empty until decided, then signups stay in
+  // this browser only (for the demo). Set it to a URL that accepts a JSON POST
+  // {email, instagram, city, ts}.
   const WAITLIST_ENDPOINT = "";
   const box = document.querySelector(".wl-box"), form = box.querySelector("form"), err = box.querySelector(".err");
   form.addEventListener("submit", async e => {
@@ -518,7 +709,7 @@
       }
       box.classList.add("done");
     } catch (_) {
-      btn.disabled = false; btn.textContent = "Join the waitlist"; err.textContent = "Something went wrong. Please try again.";
+      btn.disabled = false; btn.innerHTML = 'Join the waitlist <span class="ar">→</span>'; err.textContent = "Something went wrong. Please try again.";
     }
   });
 </script>
